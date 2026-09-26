@@ -1,0 +1,59 @@
+# Evaluation presets.
+#
+# A preset bundles the task settings that must stay fixed for a comparison to be
+# meaningful. Use these rather than hand-assembling flags, so that two runs of
+# "the same experiment" really are the same experiment.
+
+presets:
+  # --- Multiple choice -----------------------------------------------------
+  mcq-standard:
+    task: mcq
+    source: synthetic_mcq
+    # One request per item. Matches standard benchmark protocol and keeps cost
+    # linear in dataset size.
+    permutations: 0
+    max_tokens: 8
+    style: plain
+
+  mcq-bias-audit:
+    task: mcq
+    source: synthetic_mcq
+    # Three option orders per item, so the run reports `consistency` and
+    # `order_sensitivity` alongside accuracy. Triples the cost of the standard
+    # preset, and is the only way to tell a model that reads the image from one
+    # that has learned a position prior.
+    permutations: 2
+    max_tokens: 8
+    style: plain
+
+  mcq-real:
+    task: mcq
+    source: hf
+    path: mmmu
+    permutations: 0
+    max_tokens: 8
+    style: plain
+
+  # --- Hallucination -------------------------------------------------------
+  pope-standard:
+    task: pope
+    source: synthetic_pope
+    max_tokens: 4
+    style: plain
+
+  # The grounded style adds a system prompt telling the model to answer only
+  # from the image and to admit uncertainty. Running both styles on the same
+  # items measures how much of a model's score is prompt-dependent -- a
+  # confound that silently invalidates cross-paper comparisons.
+  pope-grounded:
+    task: pope
+    source: synthetic_pope
+    max_tokens: 4
+    style: grounded
+
+  pope-real:
+    task: pope
+    source: hf
+    path: pope
+    max_tokens: 4
+    style: plain

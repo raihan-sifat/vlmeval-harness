@@ -1,0 +1,89 @@
+{
+  "run_id": "mcq__synthetic_mcq__bad",
+  "created_at": "2026-09-26T13:25:58Z",
+  "generated_at": "2026-09-26T13:25:59Z",
+  "task": "mcq",
+  "model": "bad",
+  "dataset": "synthetic_mcq",
+  "config": {
+    "model": "bad",
+    "task": "mcq",
+    "dataset": "synthetic_mcq",
+    "limit": 260,
+    "max_tokens": 8,
+    "temperature": 0.0,
+    "prompt_style": "plain",
+    "seed": 12345,
+    "num_permutations": 0,
+    "config_fingerprint": "76e1dcee260359e5",
+    "model_info": {
+      "backend": "echo",
+      "model": "bad",
+      "skill": 0.0,
+      "position_bias": 0.0,
+      "chatter": 0.0,
+      "refusal": 0.0,
+      "yes_bias": 0.0,
+      "deterministic": true,
+      "sees_gold": true
+    },
+    "task_info": {
+      "task": "mcq",
+      "kind": "mcq",
+      "style": "plain",
+      "template": null,
+      "max_tokens": 8,
+      "description": "Multiple-choice visual question answering (lettered options)",
+      "options": {
+        "num_permutations": 2,
+        "seed": 12345,
+        "shuffle_choices": false,
+        "max_choices": 10,
+        "temperature": 0.0
+      }
+    },
+    "budget": {
+      "max_tokens_total": null,
+      "max_usd": null,
+      "max_requests": null,
+      "spent_tokens": 0,
+      "spent_usd": 0.0,
+      "spent_requests": 0,
+      "stopped_reason": null
+    },
+    "progress": {
+      "total": 779,
+      "completed": 779,
+      "cached": 779,
+      "failed": 0,
+      "retried": 0,
+      "elapsed_s": 1.45,
+      "stopped_reason": null
+    },
+    "workers_requested": 4,
+    "workers_effective": 4,
+    "cache": {
+      "entries": 4595
+    }
+  },
+  "counts": {
+    "n_examples": 260,
+    "n_results": 779,
+    "n_requests": 779,
+    "n_cached": 779,
+    "n_failed": 0,
+    "n_retried": 0,
+    "n_unparsed": 0,
+    "prompt_tokens": 34916,
+    "completion_tokens": 779,
+    "total_tokens": 35695,
+    "est_cost_usd": 0.0,
+    "elapsed_s": 1.46,
+    "stopped_reason": null,
+    "sink": "results\\raw\\synthetic_mcq__bad__mcq-1dc29423.jsonl"
+  },
+  "environment": {
+    "python": "3.14.5",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}

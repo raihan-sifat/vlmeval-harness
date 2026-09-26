@@ -1,0 +1,50 @@
+# Runtime requirements for vlmeval.
+#
+# The harness is designed to run with nothing installed beyond Pillow, so that
+# a fresh clone can produce a full evaluation before anyone spends a cent or
+# fights a dependency conflict. PyYAML and tqdm are conveniences, not
+# requirements, and are listed as optional below.
+
+# Core runtime (always needed): image loading and encoding.
+pillow>=10.0
+
+# --- Optional extras -------------------------------------------------------
+# Prefer PyYAML for config files. Without it a built-in reader handles the
+# subset the shipped configs use and refuses anything else rather than guessing.
+#   pip install -e ".[config]"
+pyyaml>=6.0 ; extra == "config"
+
+# Progress bars. Without it, progress is printed as plain periodic lines.
+#   pip install -e ".[cli]"
+tqdm>=4.66 ; extra == "cli"
+
+# Cloud providers: install the ones you actually use.
+#   pip install -e ".[openai]"
+#   pip install -e ".[anthropic]"
+#   pip install -e ".[google]"
+openai>=1.40 ; extra == "openai"
+anthropic>=0.34 ; extra == "anthropic"
+google-genai>=0.3 ; extra == "google"
+
+# Local open-weight VLMs (quantized loading recommended on small GPUs).
+#   pip install -e ".[local]"
+torch>=2.2 ; extra == "local"
+transformers>=4.46 ; extra == "local"
+accelerate>=0.33 ; extra == "local"
+qwen-vl-utils>=0.0.8 ; extra == "local"
+
+# Hugging Face dataset loading.
+#   pip install -e ".[data]"
+datasets>=2.20 ; extra == "data"
+
+# Result tables and figures.
+#   pip install -e ".[analysis]"
+pandas>=2.2 ; extra == "analysis"
+matplotlib>=3.8 ; extra == "analysis"
+scipy>=1.13 ; extra == "analysis"
+
+# Development.
+#   pip install -e ".[dev]"
+pytest>=8.0 ; extra == "dev"
+pytest-cov>=5.0 ; extra == "dev"
+ruff>=0.6 ; extra == "dev"

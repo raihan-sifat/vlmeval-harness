@@ -1,0 +1,20 @@
+# Normalise line endings so a checkout on Windows and one on Linux produce the
+# same bytes. Without this, every file flips between LF and CRLF depending on
+# each contributor's core.autocrlf, which turns diffs into noise and makes the
+# committed fixtures -- whose byte-identity is the point -- appear to change.
+* text=auto eol=lf
+
+# Generated fixtures and results are compared byte for byte.
+*.jsonl text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+
+# Binary, never touched.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.pdf binary
+*.sqlite3 binary

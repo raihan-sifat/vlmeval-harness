@@ -1,0 +1,648 @@
+{
+  "run_id": "mcq__synthetic_mcq__demo",
+  "task": "mcq",
+  "model": "demo",
+  "dataset": "synthetic_mcq",
+  "created_at": "2026-09-26T13:25:55Z",
+  "metrics": {
+    "accuracy": {
+      "name": "accuracy",
+      "value": 0.6538461538461539,
+      "n": 260,
+      "ci_low": 0.5961538461538461,
+      "ci_high": 0.7115384615384616,
+      "higher_is_better": true
+    },
+    "accuracy_parsed": {
+      "name": "accuracy_parsed",
+      "value": 0.6827309236947792,
+      "n": 249,
+      "ci_low": 0.6224899598393574,
+      "ci_high": 0.7389558232931728,
+      "higher_is_better": true
+    },
+    "unparsed_rate": {
+      "name": "unparsed_rate",
+      "value": 0.04230769230769231,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "mean_latency_s": {
+      "name": "mean_latency_s",
+      "value": null,
+      "n": 0,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "pick_rate_A": {
+      "name": "pick_rate_A",
+      "value": 0.25769230769230766,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "pick_rate_B": {
+      "name": "pick_rate_B",
+      "value": 0.2692307692307692,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "pick_rate_C": {
+      "name": "pick_rate_C",
+      "value": 0.2846153846153846,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "pick_rate_D": {
+      "name": "pick_rate_D",
+      "value": 0.14615384615384616,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "pick_rate_unparsed": {
+      "name": "pick_rate_unparsed",
+      "value": 0.04230769230769231,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "consistency": {
+      "name": "consistency",
+      "value": 0.6730769230769231,
+      "n": 260,
+      "ci_low": 0.6153846153846154,
+      "ci_high": 0.7307692307692307,
+      "higher_is_better": true
+    },
+    "variant_accuracy": {
+      "name": "variant_accuracy",
+      "value": 0.6835781041388518,
+      "n": 749,
+      "ci_low": 0.6488651535380507,
+      "ci_high": 0.7156208277703605,
+      "higher_is_better": true
+    },
+    "canonical_accuracy": {
+      "name": "accuracy",
+      "value": 0.6538461538461539,
+      "n": 260,
+      "ci_low": 0.5961538461538461,
+      "ci_high": 0.7115384615384616,
+      "higher_is_better": true
+    },
+    "order_sensitivity": {
+      "name": "order_sensitivity",
+      "value": -0.02973195029269793,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "n_variants": {
+      "name": "n_variants",
+      "value": 3.0,
+      "n": 260,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    }
+  },
+  "by_category": {
+    "color": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.7037037037037037,
+        "n": 54,
+        "ci_low": 0.5740740740740741,
+        "ci_high": 0.8148148148148148,
+        "higher_is_better": true
+      },
+      "accuracy_parsed": {
+        "name": "accuracy_parsed",
+        "value": 0.7307692307692307,
+        "n": 52,
+        "ci_low": 0.5961538461538461,
+        "ci_high": 0.8461538461538461,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.037037037037037035,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "mean_latency_s": {
+        "name": "mean_latency_s",
+        "value": null,
+        "n": 0,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_A": {
+        "name": "pick_rate_A",
+        "value": 0.2037037037037037,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_B": {
+        "name": "pick_rate_B",
+        "value": 0.2777777777777778,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_C": {
+        "name": "pick_rate_C",
+        "value": 0.3148148148148148,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_D": {
+        "name": "pick_rate_D",
+        "value": 0.16666666666666666,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_unparsed": {
+        "name": "pick_rate_unparsed",
+        "value": 0.037037037037037035,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "consistency": {
+        "name": "consistency",
+        "value": 0.7037037037037037,
+        "n": 54,
+        "ci_low": 0.5740740740740741,
+        "ci_high": 0.8148148148148148,
+        "higher_is_better": true
+      },
+      "variant_accuracy": {
+        "name": "variant_accuracy",
+        "value": 0.7307692307692307,
+        "n": 156,
+        "ci_low": 0.6602564102564102,
+        "ci_high": 0.7948717948717948,
+        "higher_is_better": true
+      },
+      "canonical_accuracy": {
+        "name": "accuracy",
+        "value": 0.7037037037037037,
+        "n": 54,
+        "ci_low": 0.5740740740740741,
+        "ci_high": 0.8148148148148148,
+        "higher_is_better": true
+      },
+      "order_sensitivity": {
+        "name": "order_sensitivity",
+        "value": -0.027065527065527006,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "n_variants": {
+        "name": "n_variants",
+        "value": 3.0,
+        "n": 54,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    },
+    "shape": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.6694214876033058,
+        "n": 121,
+        "ci_low": 0.5867768595041323,
+        "ci_high": 0.7522727272727262,
+        "higher_is_better": true
+      },
+      "accuracy_parsed": {
+        "name": "accuracy_parsed",
+        "value": 0.7105263157894737,
+        "n": 114,
+        "ci_low": 0.6228070175438597,
+        "ci_high": 0.7894736842105263,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.05785123966942149,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "mean_latency_s": {
+        "name": "mean_latency_s",
+        "value": null,
+        "n": 0,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_A": {
+        "name": "pick_rate_A",
+        "value": 0.30578512396694213,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_B": {
+        "name": "pick_rate_B",
+        "value": 0.21487603305785125,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_C": {
+        "name": "pick_rate_C",
+        "value": 0.2231404958677686,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_D": {
+        "name": "pick_rate_D",
+        "value": 0.19834710743801653,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_unparsed": {
+        "name": "pick_rate_unparsed",
+        "value": 0.05785123966942149,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "consistency": {
+        "name": "consistency",
+        "value": 0.6942148760330579,
+        "n": 121,
+        "ci_low": 0.6115702479338843,
+        "ci_high": 0.7768595041322314,
+        "higher_is_better": true
+      },
+      "variant_accuracy": {
+        "name": "variant_accuracy",
+        "value": 0.7122093023255814,
+        "n": 344,
+        "ci_low": 0.6656976744186046,
+        "ci_high": 0.7587209302325582,
+        "higher_is_better": true
+      },
+      "canonical_accuracy": {
+        "name": "accuracy",
+        "value": 0.6694214876033058,
+        "n": 121,
+        "ci_low": 0.5867768595041323,
+        "ci_high": 0.7522727272727262,
+        "higher_is_better": true
+      },
+      "order_sensitivity": {
+        "name": "order_sensitivity",
+        "value": -0.04278781472227566,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "n_variants": {
+        "name": "n_variants",
+        "value": 3.0,
+        "n": 121,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    },
+    "size": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.6274509803921569,
+        "n": 51,
+        "ci_low": 0.49019607843137253,
+        "ci_high": 0.7450980392156863,
+        "higher_is_better": true
+      },
+      "accuracy_parsed": {
+        "name": "accuracy_parsed",
+        "value": 0.64,
+        "n": 50,
+        "ci_low": 0.5,
+        "ci_high": 0.76,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.0196078431372549,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "mean_latency_s": {
+        "name": "mean_latency_s",
+        "value": null,
+        "n": 0,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_A": {
+        "name": "pick_rate_A",
+        "value": 0.17647058823529413,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_B": {
+        "name": "pick_rate_B",
+        "value": 0.4117647058823529,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_C": {
+        "name": "pick_rate_C",
+        "value": 0.39215686274509803,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_unparsed": {
+        "name": "pick_rate_unparsed",
+        "value": 0.0196078431372549,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "consistency": {
+        "name": "consistency",
+        "value": 0.6470588235294118,
+        "n": 51,
+        "ci_low": 0.5098039215686274,
+        "ci_high": 0.7647058823529411,
+        "higher_is_better": true
+      },
+      "variant_accuracy": {
+        "name": "variant_accuracy",
+        "value": 0.64,
+        "n": 150,
+        "ci_low": 0.56,
+        "ci_high": 0.7133333333333334,
+        "higher_is_better": true
+      },
+      "canonical_accuracy": {
+        "name": "accuracy",
+        "value": 0.6274509803921569,
+        "n": 51,
+        "ci_low": 0.49019607843137253,
+        "ci_high": 0.7450980392156863,
+        "higher_is_better": true
+      },
+      "order_sensitivity": {
+        "name": "order_sensitivity",
+        "value": -0.01254901960784316,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "n_variants": {
+        "name": "n_variants",
+        "value": 3.0,
+        "n": 51,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    },
+    "count": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.5588235294117647,
+        "n": 34,
+        "ci_low": 0.38235294117647056,
+        "ci_high": 0.7352941176470589,
+        "higher_is_better": true
+      },
+      "accuracy_parsed": {
+        "name": "accuracy_parsed",
+        "value": 0.5757575757575758,
+        "n": 33,
+        "ci_low": 0.3939393939393939,
+        "ci_high": 0.7575757575757576,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.029411764705882353,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "mean_latency_s": {
+        "name": "mean_latency_s",
+        "value": null,
+        "n": 0,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_A": {
+        "name": "pick_rate_A",
+        "value": 0.29411764705882354,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_B": {
+        "name": "pick_rate_B",
+        "value": 0.23529411764705882,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_C": {
+        "name": "pick_rate_C",
+        "value": 0.29411764705882354,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_D": {
+        "name": "pick_rate_D",
+        "value": 0.14705882352941177,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "pick_rate_unparsed": {
+        "name": "pick_rate_unparsed",
+        "value": 0.029411764705882353,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "consistency": {
+        "name": "consistency",
+        "value": 0.5882352941176471,
+        "n": 34,
+        "ci_low": 0.4117647058823529,
+        "ci_high": 0.7647058823529411,
+        "higher_is_better": true
+      },
+      "variant_accuracy": {
+        "name": "variant_accuracy",
+        "value": 0.5757575757575758,
+        "n": 99,
+        "ci_low": 0.48484848484848486,
+        "ci_high": 0.6767676767676768,
+        "higher_is_better": true
+      },
+      "canonical_accuracy": {
+        "name": "accuracy",
+        "value": 0.5588235294117647,
+        "n": 34,
+        "ci_low": 0.38235294117647056,
+        "ci_high": 0.7352941176470589,
+        "higher_is_better": true
+      },
+      "order_sensitivity": {
+        "name": "order_sensitivity",
+        "value": -0.016934046345811082,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "n_variants": {
+        "name": "n_variants",
+        "value": 3.0,
+        "n": 34,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    }
+  },
+  "counts": {
+    "n_examples": 260,
+    "n_results": 779,
+    "n_requests": 779,
+    "n_cached": 779,
+    "n_failed": 0,
+    "n_retried": 0,
+    "n_unparsed": 32,
+    "prompt_tokens": 34916,
+    "completion_tokens": 2537,
+    "total_tokens": 37453,
+    "est_cost_usd": 0.0,
+    "elapsed_s": 1.31,
+    "stopped_reason": null,
+    "sink": "results\\raw\\synthetic_mcq__demo__mcq-1dc29423.jsonl"
+  },
+  "config": {
+    "model": "demo",
+    "task": "mcq",
+    "dataset": "synthetic_mcq",
+    "limit": 260,
+    "max_tokens": 8,
+    "temperature": 0.0,
+    "prompt_style": "plain",
+    "seed": 12345,
+    "num_permutations": 0,
+    "config_fingerprint": "a9143d22a7a94cdf",
+    "model_info": {
+      "backend": "echo",
+      "model": "demo",
+      "skill": 0.7,
+      "position_bias": 0.0,
+      "chatter": 0.15,
+      "refusal": 0.05,
+      "yes_bias": 0.0,
+      "deterministic": true,
+      "sees_gold": true
+    },
+    "task_info": {
+      "task": "mcq",
+      "kind": "mcq",
+      "style": "plain",
+      "template": null,
+      "max_tokens": 8,
+      "description": "Multiple-choice visual question answering (lettered options)",
+      "options": {
+        "num_permutations": 2,
+        "seed": 12345,
+        "shuffle_choices": false,
+        "max_choices": 10,
+        "temperature": 0.0
+      }
+    },
+    "budget": {
+      "max_tokens_total": null,
+      "max_usd": null,
+      "max_requests": null,
+      "spent_tokens": 0,
+      "spent_usd": 0.0,
+      "spent_requests": 0,
+      "stopped_reason": null
+    },
+    "progress": {
+      "total": 779,
+      "completed": 779,
+      "cached": 779,
+      "failed": 0,
+      "retried": 0,
+      "elapsed_s": 1.3,
+      "stopped_reason": null
+    },
+    "workers_requested": 4,
+    "workers_effective": 4,
+    "cache": {
+      "entries": 4595
+    }
+  }
+}

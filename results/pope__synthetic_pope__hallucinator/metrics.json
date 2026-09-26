@@ -1,0 +1,443 @@
+{
+  "run_id": "pope__synthetic_pope__hallucinator",
+  "task": "pope",
+  "model": "hallucinator",
+  "dataset": "synthetic_pope",
+  "created_at": "2026-09-26T13:26:00Z",
+  "metrics": {
+    "accuracy": {
+      "name": "accuracy",
+      "value": 0.5,
+      "n": 240,
+      "ci_low": 0.43333333333333335,
+      "ci_high": 0.5626041666666661,
+      "higher_is_better": true
+    },
+    "precision": {
+      "name": "precision",
+      "value": 0.5,
+      "n": 240,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "recall": {
+      "name": "recall",
+      "value": 1.0,
+      "n": 120,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "f1": {
+      "name": "f1",
+      "value": 0.6666666666666666,
+      "n": 240,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "specificity": {
+      "name": "specificity",
+      "value": 0.0,
+      "n": 120,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "yes_ratio": {
+      "name": "yes_ratio",
+      "value": 1.0,
+      "n": 240,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "unparsed_rate": {
+      "name": "unparsed_rate",
+      "value": 0.0,
+      "n": 240,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "gold_yes_ratio": {
+      "name": "gold_yes_ratio",
+      "value": 0.5,
+      "n": 240,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "yes_ratio_bias": {
+      "name": "yes_ratio_bias",
+      "value": 0.5,
+      "n": 240,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "recall_yes": {
+      "name": "recall_yes",
+      "value": 1.0,
+      "n": 120,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    },
+    "recall_no": {
+      "name": "recall_no",
+      "value": 0.0,
+      "n": 120,
+      "ci_low": null,
+      "ci_high": null,
+      "higher_is_better": true
+    }
+  },
+  "by_category": {
+    "random": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": 0.3875,
+        "ci_high": 0.6125,
+        "higher_is_better": true
+      },
+      "precision": {
+        "name": "precision",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall": {
+        "name": "recall",
+        "value": 1.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "f1": {
+        "name": "f1",
+        "value": 0.6666666666666666,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "specificity": {
+        "name": "specificity",
+        "value": 0.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "yes_ratio": {
+        "name": "yes_ratio",
+        "value": 1.0,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.0,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "gold_yes_ratio": {
+        "name": "gold_yes_ratio",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "yes_ratio_bias": {
+        "name": "yes_ratio_bias",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall_yes": {
+        "name": "recall_yes",
+        "value": 1.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall_no": {
+        "name": "recall_no",
+        "value": 0.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    },
+    "popular": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": 0.3875,
+        "ci_high": 0.6125,
+        "higher_is_better": true
+      },
+      "precision": {
+        "name": "precision",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall": {
+        "name": "recall",
+        "value": 1.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "f1": {
+        "name": "f1",
+        "value": 0.6666666666666666,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "specificity": {
+        "name": "specificity",
+        "value": 0.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "yes_ratio": {
+        "name": "yes_ratio",
+        "value": 1.0,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.0,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "gold_yes_ratio": {
+        "name": "gold_yes_ratio",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "yes_ratio_bias": {
+        "name": "yes_ratio_bias",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall_yes": {
+        "name": "recall_yes",
+        "value": 1.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall_no": {
+        "name": "recall_no",
+        "value": 0.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    },
+    "adversarial": {
+      "accuracy": {
+        "name": "accuracy",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": 0.3875,
+        "ci_high": 0.6125,
+        "higher_is_better": true
+      },
+      "precision": {
+        "name": "precision",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall": {
+        "name": "recall",
+        "value": 1.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "f1": {
+        "name": "f1",
+        "value": 0.6666666666666666,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "specificity": {
+        "name": "specificity",
+        "value": 0.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "yes_ratio": {
+        "name": "yes_ratio",
+        "value": 1.0,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "unparsed_rate": {
+        "name": "unparsed_rate",
+        "value": 0.0,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "gold_yes_ratio": {
+        "name": "gold_yes_ratio",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "yes_ratio_bias": {
+        "name": "yes_ratio_bias",
+        "value": 0.5,
+        "n": 80,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall_yes": {
+        "name": "recall_yes",
+        "value": 1.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      },
+      "recall_no": {
+        "name": "recall_no",
+        "value": 0.0,
+        "n": 40,
+        "ci_low": null,
+        "ci_high": null,
+        "higher_is_better": true
+      }
+    }
+  },
+  "counts": {
+    "n_examples": 240,
+    "n_results": 240,
+    "n_requests": 240,
+    "n_cached": 240,
+    "n_failed": 0,
+    "n_retried": 0,
+    "n_unparsed": 0,
+    "prompt_tokens": 4341,
+    "completion_tokens": 240,
+    "total_tokens": 4581,
+    "est_cost_usd": 0.0,
+    "elapsed_s": 0.25,
+    "stopped_reason": null,
+    "sink": "results\\raw\\synthetic_pope__hallucinator__pope-6a3b2a62.jsonl"
+  },
+  "config": {
+    "model": "hallucinator",
+    "task": "pope",
+    "dataset": "synthetic_pope",
+    "limit": 240,
+    "max_tokens": 4,
+    "temperature": 0.0,
+    "prompt_style": "plain",
+    "seed": 12345,
+    "num_permutations": 0,
+    "config_fingerprint": "78a1c0477d81351f",
+    "model_info": {
+      "backend": "echo",
+      "model": "hallucinator",
+      "skill": 0.0,
+      "position_bias": 0.0,
+      "chatter": 0.0,
+      "refusal": 0.0,
+      "yes_bias": 1.0,
+      "deterministic": true,
+      "sees_gold": true
+    },
+    "task_info": {
+      "task": "pope",
+      "kind": "binary",
+      "style": "plain",
+      "template": null,
+      "max_tokens": 4,
+      "description": "Object-existence probes for hallucination (POPE-style)",
+      "options": {
+        "require_single_word": true,
+        "temperature": 0.0
+      }
+    },
+    "budget": {
+      "max_tokens_total": null,
+      "max_usd": null,
+      "max_requests": null,
+      "spent_tokens": 0,
+      "spent_usd": 0.0,
+      "spent_requests": 0,
+      "stopped_reason": null
+    },
+    "progress": {
+      "total": 240,
+      "completed": 240,
+      "cached": 240,
+      "failed": 0,
+      "retried": 0,
+      "elapsed_s": 0.25,
+      "stopped_reason": null
+    },
+    "workers_requested": 4,
+    "workers_effective": 4,
+    "cache": {
+      "entries": 4595
+    }
+  }
+}

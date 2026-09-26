@@ -1,0 +1,135 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A new push makes an in-flight run for the same ref irrelevant.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests and lint (Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor of the supported range and the current release. Windows is
+        # included deliberately: the harness is expected to work there, and the
+        # console-encoding path in cli.py only fails on a real Windows runner.
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.12"]
+        exclude:
+          - os: windows-latest
+            python-version: "3.10"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # The test suite needs no dependencies at all -- provider adapters are
+      # tested against stubs -- so the core job installs only Pillow. That is
+      # also a standing check that the zero-dependency claim stays true.
+      - name: Install core dependency
+        run: python -m pip install --upgrade pip pillow
+
+      - name: Byte-compile everything
+        # Catches syntax errors in modules whose dependencies are absent here,
+        # which unit tests alone cannot reach.
+        run: python -m compileall -q src scripts tests
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -t . -v
+
+      - name: Offline smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/make_fixtures.py --n-items 20
+          python scripts/run_eval.py --model echo:oracle --task mcq \
+            --source synthetic_mcq --quiet
+          python scripts/run_eval.py --model echo:bad --task pope \
+            --source synthetic_pope --quiet
+          # Reporting and comparison over the runs just produced.
+          python scripts/run_eval.py summarize --results results
+          python scripts/run_eval.py compare --results results --baseline oracle
+
+  # Proves the optional extras still install and integrate. Split out so a
+  # PyPI hiccup does not look like a failure of the core project.
+  extras:
+    name: Optional extras
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install with every extra
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[all,dev]"
+
+      - name: Lint
+        run: |
+          python -m ruff check src scripts tests
+
+      - name: Tests under pytest
+        run: python -m pytest -q
+
+      - name: Figures render
+        # `vlmeval plot` needs matplotlib; the core job cannot prove this works.
+        run: |
+          python scripts/make_fixtures.py --n-items 20
+          python scripts/run_eval.py benchmark --models echo:oracle echo:demo \
+            --task mcq --source synthetic_mcq --quiet
+          python scripts/run_eval.py plot --results results
+
+  # Echo's presets are calibrated so that a scoring regression moves them off
+  # their known values. Cheaper to read as a real assertion than as a snapshot
+  # buried in the test suite.
+  echo-calibration:
+    name: Echo calibration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip pillow
+
+      - name: oracle is exactly 1.0 and bad is exactly 0.0
+        run: |
+          set -euo pipefail
+          python scripts/make_fixtures.py --n-items 40
+          python scripts/run_eval.py run --model echo:oracle --task mcq \
+            --source synthetic_mcq --quiet
+          python scripts/run_eval.py run --model echo:bad --task mcq \
+            --source synthetic_mcq --quiet
+          python - <<'PY'
+          import json, pathlib, sys
+          def acc(tag):
+              for path in pathlib.Path("results").rglob("metrics.json"):
+                  data = json.loads(path.read_text(encoding="utf-8"))
+                  if data["model"] == tag:
+                      return data["metrics"]["accuracy"]["value"]
+              raise SystemExit(f"no metrics.json for {tag}")
+          oracle, bad = acc("oracle"), acc("bad")
+          print(f"oracle={oracle}  bad={bad}")
+          if oracle != 1.0:
+              sys.exit(f"echo:oracle scored {oracle}, expected exactly 1.0")
+          if bad != 0.0:
+              sys.exit(f"echo:bad scored {bad}, expected exactly 0.0")
+          PY

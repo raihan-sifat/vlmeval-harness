@@ -1,0 +1,149 @@
+# Model registry.
+#
+# Every entry here is a complete, runnable evaluation. `spec` is what gets
+# passed to the model registry, so anything the adapter accepts (max_side,
+# load_in_4bit, cost_in, ...) can be set per model here.
+#
+# Start with the `echo` entries. They need no API key and no GPU, so you can
+# confirm the whole pipeline works before spending anything:
+#
+#   python scripts/run_eval.py --config configs/models.yaml --model echo-strong
+#
+# Then swap in a real backend. The task, dataset and report are unchanged.
+
+defaults:
+  task: mcq
+  source: synthetic_mcq
+  workers: 4
+  temperature: 0.0
+  # Ceilings. A mistyped --limit is the most expensive mistake available here,
+  # so a budget is set by default rather than left to memory.
+  max_usd: 5.0
+
+models:
+  # --- Offline, no credentials required ------------------------------------
+  # Deterministic stand-ins that exercise the full pipeline. `skill` is the
+  # probability of answering correctly, so these produce a known, repeatable
+  # score. Useful for CI and for checking that a change did not break scoring.
+  # Each name below is also a built-in shorthand: `echo:strong` behaves exactly
+  # like the `echo-strong` entry, so the short spec and the config file cannot
+  # drift apart. Write the knobs out here only to show that overriding a preset
+  # is a normal thing to do.
+  - name: echo-strong
+    spec:
+      backend: echo
+      model: strong
+    task: mcq
+    source: synthetic_mcq
+
+  - name: echo-weak
+    spec:
+      backend: echo
+      model: weak
+      # Presets are a starting point, not a ceiling: explicit keys win.
+      chatter: 0.4
+      refusal: 0.1
+    task: mcq
+    source: synthetic_mcq
+
+  # The POPE subject: a model that asserts every object is present. Recall stays
+  # at 1.0 while precision and specificity collapse on the "no" items.
+  - name: echo-hallucinator
+    spec:
+      backend: echo
+      model: hallucinator
+    task: pope
+    source: synthetic_pope
+
+  # --- OpenAI --------------------------------------------------------------
+  - name: gpt-4o
+    spec:
+      backend: openai
+      model: gpt-4o
+      max_side: 1024
+      max_tokens: 8
+    task: mcq
+    source: synthetic_mcq
+
+  - name: gpt-4o-mini
+    spec:
+      backend: openai
+      model: gpt-4o-mini
+      max_side: 1024
+    task: mcq
+    source: synthetic_mcq
+
+  # Reasoning models reject a custom temperature, which the adapter handles
+  # automatically. Recorded here so the behaviour is documented, not surprising.
+  - name: gpt-5-mini
+    spec:
+      backend: openai
+      model: gpt-5-mini
+      max_side: 1024
+      max_tokens: 16
+    task: mcq
+    source: synthetic_mcq
+
+  # --- Anthropic -----------------------------------------------------------
+  - name: claude-haiku-4-5
+    spec:
+      backend: anthropic
+      model: claude-haiku-4-5
+      max_side: 1024
+      max_tokens: 8
+    task: mcq
+    source: synthetic_mcq
+
+  - name: claude-sonnet-5
+    spec:
+      backend: anthropic
+      model: claude-sonnet-5
+      max_side: 1024
+    task: mcq
+    source: synthetic_mcq
+
+  # --- Google --------------------------------------------------------------
+  - name: gemini-2.5-flash
+    spec:
+      backend: google
+      model: gemini-2.5-flash
+      max_side: 1024
+    task: mcq
+    source: synthetic_mcq
+
+  # --- Local open weights --------------------------------------------------
+  # These need `pip install -e ".[local]"` and a Hugging Face download on first
+  # use. 500M is the largest SmolVLM that comfortably fits a 4 GB card; the
+  # runner forces single-threaded evaluation for local backends because
+  # generation is not thread-safe and parallel workers would just OOM.
+  - name: smolvlm-500m
+    spec:
+      backend: hf
+      model: HuggingFaceTB/SmolVLM-500M-Instruct
+      max_side: 512
+      max_tokens: 8
+    task: mcq
+    source: synthetic_mcq
+    workers: 1
+
+  - name: smolvlm-256m
+    spec:
+      backend: hf
+      model: HuggingFaceTB/SmolVLM-256M-Instruct
+      max_side: 384
+      max_tokens: 8
+    task: mcq
+    source: synthetic_mcq
+    workers: 1
+
+  # 4-bit loading. Without it this does not fit in 4 GB of VRAM.
+  - name: qwen2-vl-2b-4bit
+    spec:
+      backend: hf
+      model: Qwen/Qwen2-VL-2B-Instruct
+      load_in_4bit: true
+      max_side: 1024
+      max_tokens: 8
+    task: mcq
+    source: synthetic_mcq
+    workers: 1
