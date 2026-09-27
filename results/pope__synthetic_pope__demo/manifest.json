@@ -1,7 +1,7 @@
 {
   "run_id": "pope__synthetic_pope__demo",
-  "created_at": "2026-09-26T13:26:00Z",
-  "generated_at": "2026-09-26T13:26:00Z",
+  "created_at": "2026-09-26T13:29:31Z",
+  "generated_at": "2026-09-26T13:29:31Z",
   "task": "pope",
   "model": "demo",
   "dataset": "synthetic_pope",
@@ -54,7 +54,7 @@
       "cached": 240,
       "failed": 0,
       "retried": 0,
-      "elapsed_s": 0.18,
+      "elapsed_s": 0.21,
       "stopped_reason": null
     },
     "workers_requested": 4,
@@ -75,7 +75,7 @@
     "completion_tokens": 748,
     "total_tokens": 5089,
     "est_cost_usd": 0.0,
-    "elapsed_s": 0.19,
+    "elapsed_s": 0.21,
     "stopped_reason": null,
     "sink": "results\\raw\\synthetic_pope__demo__pope-6a3b2a62.jsonl"
   },

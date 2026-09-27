@@ -31,6 +31,7 @@ always answers "C".
 ## Contents
 
 - [Why this exists](#why-this-exists)
+- [Tech stack](#tech-stack)
 - [Install](#install)
 - [The five-minute tour](#the-five-minute-tour)
 - [Concepts](#concepts)
@@ -55,15 +56,61 @@ always answers "C".
 Most VLM evaluation code answers "what was the score?" and none of the harder
 questions:
 
-| Question | What most harnesses do | What this one does |
-| --- | --- | --- |
-| What exactly was the model shown? | Whatever string was in the loop | One shared template per task, versioned by fingerprint, stored with every record |
-| Does the model just prefer option A? | Ignored | Permutation audit: re-ask with shuffled options and report consistency and order sensitivity |
-| What happened to replies that didn't parse? | Dropped from the denominator | Counted as **wrong**, and reported separately as `unparsed_rate` |
-| Is 78% vs 76% a real difference? | Two numbers, no test | Paired McNemar with a bootstrap CI on the delta, Holm-corrected across the family |
-| Could the answer key have leaked? | Unknown | Gold never enters a prompt or a provider payload; a test asserts it for every backend |
-| What did it cost? | A guess | Per-item token counts and a price lookup, with a hard spend ceiling |
-| Can I resume a 5,000-item run that died at 2,000? | Start over | JSONL sink, resume, and a content-addressed response cache |
+| Question                                          | What most harnesses do          | What this one does                                                                           |
+| ------------------------------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------- |
+| What exactly was the model shown?                 | Whatever string was in the loop | One shared template per task, versioned by fingerprint, stored with every record             |
+| Does the model just prefer option A?              | Ignored                         | Permutation audit: re-ask with shuffled options and report consistency and order sensitivity |
+| What happened to replies that didn't parse?       | Dropped from the denominator    | Counted as **wrong**, and reported separately as `unparsed_rate`                             |
+| Is 78% vs 76% a real difference?                  | Two numbers, no test            | Paired McNemar with a bootstrap CI on the delta, Holm-corrected across the family            |
+| Could the answer key have leaked?                 | Unknown                         | Gold never enters a prompt or a provider payload; a test asserts it for every backend        |
+| What did it cost?                                 | A guess                         | Per-item token counts and a price lookup, with a hard spend ceiling                          |
+| Can I resume a 5,000-item run that died at 2,000? | Start over                      | JSONL sink, resume, and a content-addressed response cache                                   |
+
+## Tech stack
+
+Everything below is chosen so the harness runs on a fresh clone before anyone
+resolves a heavy dependency graph, spends money, or touches a GPU. The core is
+**pure Python plus Pillow** -- every provider SDK, dataset loader, and plotting
+library is an optional extra.
+
+**Core**
+
+| Layer             | Choice                                           | Why                                                                                                             |
+| ----------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| Language          | Python 3.10+                                     | `match`, `X \| None` unions, and modern typing throughout                                                       |
+| Runtime deps      | [Pillow](https://python-pillow.org/) only        | Image loading, resizing, and base64 encoding for vision payloads                                                |
+| Packaging         | `pyproject.toml` (PEP 517/518), setuptools       | One editable install exposes the `vlmeval` console script; extras gate everything else                          |
+| CLI               | Standard-library `argparse` (subcommands)        | Zero-dependency, no framework to learn                                                                          |
+| Concurrency       | `concurrent.futures.ThreadPoolExecutor`          | I/O-bound provider calls; the cache uses a single transactional writer                                          |
+| Retries & budgets | Hand-rolled in `runner.py` / `runstate.py`       | Per-request retry, spend ceiling, and resume without an orchestration library                                   |
+| Statistics        | Pure-Python stdlib (`math`)                      | Bootstrap CIs, McNemar's test, and Holm-Bonferroni implemented directly -- no NumPy/SciPy needed to score a run |
+| Storage           | JSONL sinks + content-addressed **SQLite** cache | Crash-safe resume and free re-runs; `sqlite3` ships with Python                                                 |
+| Config            | YAML with a built-in subset reader               | PyYAML when present, a strict fallback parser otherwise -- never guesses                                        |
+| Reproducibility   | Content hashing (`hashlib`) + seeded `random`    | Byte-identical fixtures and fingerprinted outputs                                                               |
+
+**Optional extras** (install only what you use -- `pip install -e ".[all]"` for everything)
+
+| Extra       | Stack                                            | Purpose                                           |
+| ----------- | ------------------------------------------------ | ------------------------------------------------- |
+| `config`    | PyYAML                                           | Full YAML config files                            |
+| `cli`       | tqdm                                             | Progress bars instead of periodic plain lines     |
+| `openai`    | OpenAI Python SDK                                | `openai:gpt-4o` and compatible endpoints          |
+| `anthropic` | Anthropic Python SDK                             | `anthropic:claude-haiku-4-5`                      |
+| `google`    | google-genai SDK                                 | `google:gemini-2.5-flash`                         |
+| `local`     | PyTorch, Transformers, Accelerate, qwen-vl-utils | Open-weight VLMs on local GPU (`hf:smolvlm-500m`) |
+| `data`      | Hugging Face `datasets`                          | Load public benchmarks from the Hub               |
+| `analysis`  | pandas, matplotlib, scipy                        | `vlmeval plot` figures and tabular analysis       |
+| `dev`       | pytest, pytest-cov, ruff                         | Test suite and linting                            |
+
+**Testing & quality:** 182 tests run with `unittest` / `pytest` against recording
+stubs -- no network, no API keys, no GPU. Provider adapters are verified in
+isolation so a request-shape bug cannot hide behind the offline path. Ruff
+(`line-length = 100`) handles linting and import sorting.
+
+**Architecture:** a small plugin model -- model backends and tasks register
+through a central registry, specs like `openai:gpt-4o` and `mcq` resolve to
+objects, and metrics are plain callables over per-item outcomes. Adding a
+backend or task is a class plus one registry entry.
 
 ## Install
 
@@ -78,15 +125,15 @@ pip install -e ".[all]"          # + every provider SDK, dataset loading, figure
 
 Optional extras, install only what you need:
 
-| Extra | Adds | Needed for |
-| --- | --- | --- |
-| `config` | PyYAML | Richer config files (a built-in reader handles the shipped subset) |
-| `cli` | tqdm | Progress bars (otherwise periodic plain lines) |
-| `openai` / `anthropic` / `google` | provider SDKs | Those cloud backends |
-| `local` | torch, transformers | Local open-weight VLMs |
-| `data` | datasets | Loading benchmarks from the Hugging Face Hub |
-| `analysis` | pandas, matplotlib | `vlmeval plot` |
-| `dev` | pytest, ruff | Tests and linting |
+| Extra                             | Adds                | Needed for                                                         |
+| --------------------------------- | ------------------- | ------------------------------------------------------------------ |
+| `config`                          | PyYAML              | Richer config files (a built-in reader handles the shipped subset) |
+| `cli`                             | tqdm                | Progress bars (otherwise periodic plain lines)                     |
+| `openai` / `anthropic` / `google` | provider SDKs       | Those cloud backends                                               |
+| `local`                           | torch, transformers | Local open-weight VLMs                                             |
+| `data`                            | datasets            | Loading benchmarks from the Hugging Face Hub                       |
+| `analysis`                        | pandas, matplotlib  | `vlmeval plot`                                                     |
+| `dev`                             | pytest, ruff        | Tests and linting                                                  |
 
 `python scripts/run_eval.py` works without installing anything at all; the
 scripts put `src/` on the path themselves.
@@ -204,7 +251,7 @@ hard ones dropped.
 
 **Permutation audit.** With `--permutations N`, each MCQ item is re-asked with
 N extra option orders. The same item keeps the same seed, so the model is
-*consistently* right or consistently wrong, the way a real model behaves. Then:
+_consistently_ right or consistently wrong, the way a real model behaves. Then:
 
 - `consistency` -- how often all orders agreed. A model that only ever answers
   "A" scores near `1/num_choices` here while its accuracy sits near chance.
@@ -263,13 +310,13 @@ says "yes" to everything scores 50% on a balanced set.
 
 ## Models
 
-| Backend | Spec | Credentials |
-| --- | --- | --- |
-| OpenAI | `openai:gpt-4o` | `OPENAI_API_KEY` |
-| Anthropic | `anthropic:claude-haiku-4-5` | `ANTHROPIC_API_KEY` |
-| Google | `google:gemini-2.5-flash` | `GOOGLE_API_KEY` or `GEMINI_API_KEY` |
-| Local | `hf:smolvlm-500m`, `hf:qwen2-vl-2b-4bit` | none (downloads weights) |
-| Offline | `echo:demo` | none |
+| Backend   | Spec                                     | Credentials                          |
+| --------- | ---------------------------------------- | ------------------------------------ |
+| OpenAI    | `openai:gpt-4o`                          | `OPENAI_API_KEY`                     |
+| Anthropic | `anthropic:claude-haiku-4-5`             | `ANTHROPIC_API_KEY`                  |
+| Google    | `google:gemini-2.5-flash`                | `GOOGLE_API_KEY` or `GEMINI_API_KEY` |
+| Local     | `hf:smolvlm-500m`, `hf:qwen2-vl-2b-4bit` | none (downloads weights)             |
+| Offline   | `echo:demo`                              | none                                 |
 
 Copy `.env.example` to `.env` and fill in what you need; the harness loads it on
 start and real environment variables always win, so CI secrets are never
@@ -282,16 +329,16 @@ the ways real models fail. It is not a placeholder: `echo:oracle` scores exactly
 100.0 and `echo:bad` exactly 0.0, which makes them usable as CI floors and
 ceilings that catch a scoring regression immediately.
 
-| Preset | Behaviour | Use it to |
-| --- | --- | --- |
-| `echo:oracle` | always right, never verbose, never refuses | CI ceiling; expect accuracy 1.0 |
-| `echo:bad` | never right | CI floor; expect accuracy 0.0 |
-| `echo:strong` / `echo:weak` | high / low skill | a spread worth comparing |
-| `echo:demo` | 70% skill, some chatter | the default smoke test |
-| `echo:chatty` | wraps every reply in prose | exercise the answer parsers |
-| `echo:refuses` | always unparseable | exercise unparsed accounting |
-| `echo:blind` | always answers the first option | exercise the order-consistency audit |
-| `echo:hallucinator` | asserts every object is present | exercise POPE's whole reason to exist |
+| Preset                      | Behaviour                                  | Use it to                             |
+| --------------------------- | ------------------------------------------ | ------------------------------------- |
+| `echo:oracle`               | always right, never verbose, never refuses | CI ceiling; expect accuracy 1.0       |
+| `echo:bad`                  | never right                                | CI floor; expect accuracy 0.0         |
+| `echo:strong` / `echo:weak` | high / low skill                           | a spread worth comparing              |
+| `echo:demo`                 | 70% skill, some chatter                    | the default smoke test                |
+| `echo:chatty`               | wraps every reply in prose                 | exercise the answer parsers           |
+| `echo:refuses`              | always unparseable                         | exercise unparsed accounting          |
+| `echo:blind`                | always answers the first option            | exercise the order-consistency audit  |
+| `echo:hallucinator`         | asserts every object is present            | exercise POPE's whole reason to exist |
 
 Presets are a starting point, not a ceiling -- any field can be overridden:
 
@@ -320,13 +367,13 @@ without one, because "the first N" must mean the same N on every machine.
 
 Each run writes to `results/<task>__<dataset>__<model>/`:
 
-| File | Contents |
-| --- | --- |
-| `metrics.json` | Every metric with its confidence interval, per-category breakdowns, counts, and the run config |
-| `summary.md` | The human-readable report |
-| `summary.csv` | The same numbers as a table, for a spreadsheet |
-| `results.jsonl` | One scored record per item, with the full prompt and raw reply |
-| `manifest.json` | Provenance: timestamps, config, environment, counts |
+| File            | Contents                                                                                       |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| `metrics.json`  | Every metric with its confidence interval, per-category breakdowns, counts, and the run config |
+| `summary.md`    | The human-readable report                                                                      |
+| `summary.csv`   | The same numbers as a table, for a spreadsheet                                                 |
+| `results.jsonl` | One scored record per item, with the full prompt and raw reply                                 |
+| `manifest.json` | Provenance: timestamps, config, environment, counts                                            |
 
 `results/raw/` keeps the fingerprint-tagged raw trace used for resuming. It is
 gitignored because the committed fixtures reproduce it byte for byte, and it is
@@ -384,22 +431,22 @@ A config file names complete, repeatable experiments rather than model ids:
 
 ```yaml
 defaults:
-  workers: 4
-  temperature: 0.0
-  max_usd: 5.0
+    workers: 4
+    temperature: 0.0
+    max_usd: 5.0
 
 models:
-  - name: echo-strong
-    spec: {backend: echo, model: strong}
-    task: mcq
-    source: synthetic_mcq
+    - name: echo-strong
+      spec: { backend: echo, model: strong }
+      task: mcq
+      source: synthetic_mcq
 
-  - name: gpt-4o-audited
-    spec: {backend: openai, model: gpt-4o}
-    task: mcq
-    source: synthetic_mcq
-    permutations: 3
-    style: grounded
+    - name: gpt-4o-audited
+      spec: { backend: openai, model: gpt-4o }
+      task: mcq
+      source: synthetic_mcq
+      permutations: 3
+      style: grounded
 ```
 
 ```bash
@@ -417,17 +464,17 @@ above and refuses anything it does not implement rather than half-parsing it.
 
 ## Command reference
 
-| Command | Purpose |
-| --- | --- |
-| `run` | One model against one task and dataset |
-| `benchmark` | Several models, then a leaderboard with paired tests |
-| `summarize` | Rebuild a leaderboard from existing runs |
-| `compare` | Paired McNemar comparison between runs |
-| `plot` | Render figures (needs `.[analysis]`) |
-| `fixtures` | Generate the offline synthetic benchmark |
-| `models` | Backends, credentials, prices, local and echo presets |
-| `tasks` | Tasks and prompt templates |
-| `keys` | Which credentials are present |
+| Command     | Purpose                                               |
+| ----------- | ----------------------------------------------------- |
+| `run`       | One model against one task and dataset                |
+| `benchmark` | Several models, then a leaderboard with paired tests  |
+| `summarize` | Rebuild a leaderboard from existing runs              |
+| `compare`   | Paired McNemar comparison between runs                |
+| `plot`      | Render figures (needs `.[analysis]`)                  |
+| `fixtures`  | Generate the offline synthetic benchmark              |
+| `models`    | Backends, credentials, prices, local and echo presets |
+| `tasks`     | Tasks and prompt templates                            |
+| `keys`      | Which credentials are present                         |
 
 Useful flags: `--dry-run`, `--limit`, `--permutations`, `--seed`, `--style`,
 `--template`, `--workers`, `--max-retries`, `--no-cache`, `--no-resume`,

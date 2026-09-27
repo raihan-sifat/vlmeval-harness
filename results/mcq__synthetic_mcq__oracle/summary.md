@@ -1,6 +1,6 @@
 # mcq / synthetic_mcq / `oracle`
 
-_Generated 2026-09-26T13:25:54Z_
+_Generated 2026-09-26T13:29:29Z_
 
 ## Run
 
@@ -10,14 +10,14 @@ _Generated 2026-09-26T13:25:54Z_
 | Dataset | `synthetic_mcq` |
 | Model | `oracle` |
 | Items | 260 |
-| Requests | 779 |
-| From cache | 779 |
+| Requests | 260 |
+| From cache | 260 |
 | Failed calls | 0 |
 | Unparsed replies | 0 (0.0%) |
-| Prompt tokens | 34,916 |
-| Completion tokens | 779 |
+| Prompt tokens | 11,653 |
+| Completion tokens | 260 |
 | Est. cost | $0.0000 |
-| Wall time | 1.4s |
+| Wall time | 1.1s |
 
 ## Headline metrics
 
@@ -29,7 +29,7 @@ Values are point estimates with 95% bootstrap confidence intervals.
 | accuracy_parsed | 100.0 [100.0, 100.0] | [1.000, 1.000] | 260 | higher |
 | unparsed_rate | 0.0 | [-, -] | 260 | higher |
 | consistency | 100.0 [100.0, 100.0] | [1.000, 1.000] | 260 | higher |
-| variant_accuracy | 100.0 [100.0, 100.0] | [1.000, 1.000] | 779 | higher |
+| variant_accuracy | 100.0 [100.0, 100.0] | [1.000, 1.000] | 260 | higher |
 | canonical_accuracy | 100.0 [100.0, 100.0] | [1.000, 1.000] | 260 | higher |
 | order_sensitivity | 0.0 | [-, -] | 260 | higher |
 

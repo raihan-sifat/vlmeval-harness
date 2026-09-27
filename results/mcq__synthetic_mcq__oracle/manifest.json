@@ -1,7 +1,7 @@
 {
   "run_id": "mcq__synthetic_mcq__oracle",
-  "created_at": "2026-09-26T13:25:52Z",
-  "generated_at": "2026-09-26T13:25:54Z",
+  "created_at": "2026-09-26T13:29:28Z",
+  "generated_at": "2026-09-26T13:29:29Z",
   "task": "mcq",
   "model": "oracle",
   "dataset": "synthetic_mcq",
@@ -35,7 +35,7 @@
       "max_tokens": 8,
       "description": "Multiple-choice visual question answering (lettered options)",
       "options": {
-        "num_permutations": 2,
+        "num_permutations": 0,
         "seed": 12345,
         "shuffle_choices": false,
         "max_choices": 10,
@@ -52,12 +52,12 @@
       "stopped_reason": null
     },
     "progress": {
-      "total": 779,
-      "completed": 779,
-      "cached": 779,
+      "total": 260,
+      "completed": 260,
+      "cached": 260,
       "failed": 0,
       "retried": 0,
-      "elapsed_s": 1.42,
+      "elapsed_s": 1.14,
       "stopped_reason": null
     },
     "workers_requested": 4,
@@ -68,19 +68,19 @@
   },
   "counts": {
     "n_examples": 260,
-    "n_results": 779,
-    "n_requests": 779,
-    "n_cached": 779,
+    "n_results": 260,
+    "n_requests": 260,
+    "n_cached": 260,
     "n_failed": 0,
     "n_retried": 0,
     "n_unparsed": 0,
-    "prompt_tokens": 34916,
-    "completion_tokens": 779,
-    "total_tokens": 35695,
+    "prompt_tokens": 11653,
+    "completion_tokens": 260,
+    "total_tokens": 11913,
     "est_cost_usd": 0.0,
-    "elapsed_s": 1.42,
+    "elapsed_s": 1.15,
     "stopped_reason": null,
-    "sink": "results\\raw\\synthetic_mcq__oracle__mcq-1dc29423.jsonl"
+    "sink": "results\\raw\\synthetic_mcq__oracle__mcq-b764f4d6.jsonl"
   },
   "environment": {
     "python": "3.14.5",

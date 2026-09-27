@@ -1,6 +1,6 @@
 # mcq / synthetic_mcq / `demo`
 
-_Generated 2026-09-26T13:25:57Z_
+_Generated 2026-09-26T13:29:30Z_
 
 ## Run
 
@@ -10,14 +10,14 @@ _Generated 2026-09-26T13:25:57Z_
 | Dataset | `synthetic_mcq` |
 | Model | `demo` |
 | Items | 260 |
-| Requests | 779 |
-| From cache | 779 |
+| Requests | 260 |
+| From cache | 260 |
 | Failed calls | 0 |
-| Unparsed replies | 32 (4.1%) |
-| Prompt tokens | 34,916 |
-| Completion tokens | 2,537 |
+| Unparsed replies | 11 (4.2%) |
+| Prompt tokens | 11,653 |
+| Completion tokens | 843 |
 | Est. cost | $0.0000 |
-| Wall time | 1.3s |
+| Wall time | 0.8s |
 
 ## Headline metrics
 
@@ -28,10 +28,10 @@ Values are point estimates with 95% bootstrap confidence intervals.
 | accuracy | 65.4 [59.6, 71.2] | [0.596, 0.712] | 260 | higher |
 | accuracy_parsed | 68.3 [62.2, 73.9] | [0.622, 0.739] | 249 | higher |
 | unparsed_rate | 4.2 | [-, -] | 260 | higher |
-| consistency | 67.3 [61.5, 73.1] | [0.615, 0.731] | 260 | higher |
-| variant_accuracy | 68.4 [64.9, 71.6] | [0.649, 0.716] | 749 | higher |
+| consistency | 95.8 [93.1, 98.1] | [0.931, 0.981] | 260 | higher |
+| variant_accuracy | 68.3 [62.2, 73.9] | [0.622, 0.739] | 249 | higher |
 | canonical_accuracy | 65.4 [59.6, 71.2] | [0.596, 0.712] | 260 | higher |
-| order_sensitivity | -3.0 | [-, -] | 260 | higher |
+| order_sensitivity | -2.9 | [-, -] | 249 | higher |
 
 ## By category
 
