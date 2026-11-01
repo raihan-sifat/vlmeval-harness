@@ -1,6 +1,23 @@
-# vlmeval
+# VLM Evaluation Harness
 
 A reproducible evaluation harness for vision-language models.
+
+**VLM stands for Vision-Language Model.** These are AI models that can
+interpret images and answer questions about them. I developed this tool,
+`vlmeval`, to evaluate how well these models perform on different tasks. For
+example, it can give a model an image and ask a multiple-choice question about
+what is shown.
+
+The tool also checks whether a model chooses the same answer when the answer
+options are rearranged. If the correct answer moves from option A to option C,
+the model should follow the answer, even though its letter has changed. This
+helps reveal whether answer position influences the model's responses.
+
+Alongside these consistency checks, the tool measures accuracy, statistical
+reliability (how much uncertainty there is in the results), and estimated
+evaluation costs. My main goal is to make vision-language model evaluation
+more reliable and reproducible, so others can understand how results were
+obtained and repeat the evaluation using the same setup.
 
 Point it at a model and a dataset, and it produces a number you can defend: a
 point estimate, a confidence interval, a cost, and the raw per-item records it
